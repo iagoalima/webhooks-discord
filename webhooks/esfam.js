@@ -9,69 +9,69 @@ const REQUEST_DELAY = 700;
 const days = [
   {
     title: 'DIA ZERO',
-    content: `> - * **Boas-vindas!**
+    content: `> - **Boas-vindas!**
 > - Orientações, diretrizes e regras
 > - Primeira Redação:
--# "__O que espera aprender na EsFAM e quais experiências de vida o traz aqui.__"`,
+> - * -# "__O que espera aprender na EsFAM e quais experiências de vida o traz aqui.__"`,
   },
   {
     title: 'DIA UM',
-    content: `**\`\`[Saudações diárias]\`\`**
+    content: `\`\`[Saudações diárias]\`\`
 > - Primeira Aula:
-> - **- "__Atendimento de Tíquetes de Revogação.__"**
->-# Prazo final para entrega da Redação, antes da aula.`,
+> - * -# "__Atendimento de Tíquetes de Revogação.__"
+> - Prazo final para entrega da Redação: antes da aula.`,
   },
   {
     title: 'DIA DOIS',
-    content: `**\`\`[Saudações diárias]\`\`**
+    content: `\`\`[Saudações diárias]\`\`
 > - Aula prática — Simulado de Revogação
 > - Aplicação das Entrevistas`,
   },
   {
     title: 'DIA TRÊS',
-    content: `**\`\`[Saudações diárias]\`\`**
+    content: `\`\`[Saudações diárias]\`\`
 > - Anúncio da Segunda Aula
 > - Aula prática — Simulado de Revogação
 > - Aplicação das Entrevistas`,
   },
   {
     title: 'DIA QUATRO',
-    content: `**\`\`[Saudações diárias]\`\`**
+    content: `\`\`[Saudações diárias]\`\`
 > - Segunda Redação — Tema a decidir.
 > - Aplicação da Segunda Aula:
-> - **- "__Leis do Exército e Direito Penal.__"**`,
+> - * -# "__Leis do Exército e Direito Penal.__"`,
   },
   {
     title: 'DIA CINCO',
-    content: `**\`\`[Saudações diárias]\`\`**
+    content: `\`\`[Saudações diárias]\`\`
 > - Anúncio da Terceira Aula
 > - Aplicação do trabalho sobre a Legislação.`,
   },
   {
     title: 'DIA SEIS',
-    content: `**\`\`[Saudações diárias]\`\`**
+    content: `\`\`[Saudações diárias]\`\`
 > - Terceira Redação (simples)
 > - Aplicação da Terceira Aula:
-> - **- "__Cuidados e Diretrizes do Superior Tribunal Militar (STM).__"**`,
+> - * -# "__Cuidados e Diretrizes do Superior Tribunal Militar (STM).__"`,
   },
   {
     title: 'DIA SETE',
-    content: `**\`\`[Saudações diárias]\`\`**
+    content: `\`\`[Saudações diárias]\`\`
 > - Anúncio do Formulário Final
 > - Aplicação de Redação Final (completa)
->-# Prazo final para entrega da Legislação criada pelo Aluno.`,
+> * -# Prazo final para entrega da Legislação criada pelo Aluno.`,
   },
   {
     title: 'DIA OITO',
-    content: `**\`\`[Saudações diárias]\`\`**
+    content: `\`\`[Saudações diárias]\`\`
 > - Aplicação do Formulário Final
-> - * **Anúncio dos Aprovados!**`,
+> - **Anúncio dos Aprovados!**`,
   },
   {
     title: 'DIA NOVE',
-    content: `**\`\`[Saudações diárias]\`\`**
+    content: `\`\`[Saudações diárias]\`\`
 > - Avaliação de Desempenho
-> - * **Anúncio dos Aprovados!**
+> - **Anúncio dos Aprovados!**
 > - Reunião com os aprovados para introdução ao Tribunal.`,
   },
 ];
