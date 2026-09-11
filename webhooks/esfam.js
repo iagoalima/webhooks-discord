@@ -1,8 +1,10 @@
 const WEBHOOK_URL = process.env.ESFAM_WEBHOOK_URL;
 
 const ESFAM_EMOJI = '<:esfam:1547984245543141497>';
+const BANNER_URL = 'https://raw.githubusercontent.com/iagoalima/webhooks-discord/main/webhooks/banner%20stm.png';
 const SEPARATOR = '**───────────────── ❖ ─────────────────**';
 const INVISIBLE = '\u200B';
+const REQUEST_DELAY = 700;
 
 const days = [
   {
@@ -10,14 +12,14 @@ const days = [
     content: `> - * **Boas-vindas!**
 > - Orientações, diretrizes e regras
 > - Primeira Redação:
-- **"__O que espera aprender na EsFAM e quais experiências de vida o traz aqui.__"**`,
+-# "__O que espera aprender na EsFAM e quais experiências de vida o traz aqui.__"`,
   },
   {
     title: 'DIA UM',
     content: `**\`\`[Saudações diárias]\`\`**
 > - Primeira Aula:
- - **"__Atendimento de Tíquetes de Revogação.__"**
--# Prazo final para entrega da Redação, antes da aula.`,
+> - **- "__Atendimento de Tíquetes de Revogação.__"**
+>-# Prazo final para entrega da Redação, antes da aula.`,
   },
   {
     title: 'DIA DOIS',
@@ -37,7 +39,7 @@ const days = [
     content: `**\`\`[Saudações diárias]\`\`**
 > - Segunda Redação — Tema a decidir.
 > - Aplicação da Segunda Aula:
- - **"__Leis do Exército e Direito Penal.__"**`,
+> - **- "__Leis do Exército e Direito Penal.__"**`,
   },
   {
     title: 'DIA CINCO',
@@ -50,14 +52,14 @@ const days = [
     content: `**\`\`[Saudações diárias]\`\`**
 > - Terceira Redação (simples)
 > - Aplicação da Terceira Aula:
-- **"__Cuidados e Diretrizes do Superior Tribunal Militar (STM).__"**`,
+> - **- "__Cuidados e Diretrizes do Superior Tribunal Militar (STM).__"**`,
   },
   {
     title: 'DIA SETE',
     content: `**\`\`[Saudações diárias]\`\`**
 > - Anúncio do Formulário Final
 > - Aplicação de Redação Final (completa)
--# Prazo final para entrega da Legislação criada pelo Aluno.`,
+>-# Prazo final para entrega da Legislação criada pelo Aluno.`,
   },
   {
     title: 'DIA OITO',
@@ -74,19 +76,43 @@ const days = [
   },
 ];
 
-async function sendWebhook(payload) {
-  const response = await fetch(WEBHOOK_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  });
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
-  if (!response.ok) {
+async function sendWebhook(payload) {
+  // Mantém um intervalo entre as requisições e respeita automaticamente o retry_after do Discord.
+  await sleep(REQUEST_DELAY);
+
+  while (true) {
+    const response = await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+
+    if (response.ok) {
+      return response;
+    }
+
     const body = await response.text();
+
+    if (response.status === 429) {
+      let retryAfter = 1;
+
+      try {
+        const data = JSON.parse(body);
+        retryAfter = Number(data.retry_after) || 1;
+      } catch {
+        retryAfter = 1;
+      }
+
+      await sleep(Math.ceil(retryAfter * 1000) + 250);
+      continue;
+    }
+
     throw new Error(`Discord retornou ${response.status}: ${body}`);
   }
-
-  return response;
 }
 
 async function publishEsfam() {
@@ -94,9 +120,22 @@ async function publishEsfam() {
     throw new Error('Defina a variável de ambiente ESFAM_WEBHOOK_URL antes de executar.');
   }
 
-  // Mensagem inicial.
+  // Título e banner da EsFAM.
   await sendWebhook({
-    content: `**CRONOGRAMA — EsFAM**\n-# ESCOLA DE FORMAÇÃO E APERFEIÇOAMENTO DE MAGISTRADOS\n\nO cronograma da **EsFAM** tem como principal objetivo assegurar a progressão contínua das atividades e aulas, garantindo que o processo de formação seja concluído dentro do prazo estipulado.\n\nDessa forma, busca-se evitar que a inoperância ou a ausência de andamento nas atividades impeça **Alunos aptos e competentes** de contribuírem efetivamente para as atividades do **Superior Tribunal Militar**.\n\nSeguem abaixo as atividades que deverão ser realizadas pelos **Alunos ao longo dos dias de formação**:\n\n${SEPARATOR}`,
+    embeds: [
+      {
+        title: 'CRONOGRAMA - ESFAM',
+        description: '-# Escola de Formação e Aperfeiçoamento de Magistrados',
+        image: {
+          url: BANNER_URL,
+        },
+      },
+    ],
+  });
+
+  // Texto introdutório.
+  await sendWebhook({
+    content: `O cronograma da **EsFAM** tem como principal objetivo assegurar a progressão contínua das atividades e aulas, garantindo que o processo de formação seja concluído dentro do prazo estipulado.\n\nDessa forma, busca-se evitar que a inoperância ou a ausência de andamento nas atividades impeça **Alunos aptos e competentes** de contribuírem efetivamente para as atividades do **Superior Tribunal Militar**.\n\nSeguem abaixo as atividades que deverão ser realizadas pelos **Alunos ao longo dos dias de formação**:\n\n${SEPARATOR}`,
   });
 
   // Cada dia é composto por: embed com título + mensagem de conteúdo + espaço invisível.
