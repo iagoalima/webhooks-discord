@@ -5,6 +5,8 @@ const BANNER_URL = 'https://raw.githubusercontent.com/iagoalima/webhooks-discord
 const SEPARATOR = '**───────────────── ❖ ─────────────────**';
 const INVISIBLE = '\u200B';
 const REQUEST_DELAY = 700;
+const EMBED_COLOR_TITULO = 0x5865F2;
+const EMBED_COLOR_DIAS = 0x2B2D31;
 
 const days = [
   {
@@ -81,7 +83,6 @@ function sleep(ms) {
 }
 
 async function sendWebhook(payload) {
-  // Mantém um intervalo entre as requisições e respeita automaticamente o retry_after do Discord.
   await sleep(REQUEST_DELAY);
 
   while (true) {
@@ -126,6 +127,7 @@ async function publishEsfam() {
       {
         title: 'CRONOGRAMA - ESFAM',
         description: '-# Escola de Formação e Aperfeiçoamento de Magistrados',
+        color: EMBED_COLOR_TITULO,
         image: {
           url: BANNER_URL,
         },
@@ -138,12 +140,12 @@ async function publishEsfam() {
     content: `O cronograma da **EsFAM** tem como principal objetivo assegurar a progressão contínua das atividades e aulas, garantindo que o processo de formação seja concluído dentro do prazo estipulado.\n\nDessa forma, busca-se evitar que a inoperância ou a ausência de andamento nas atividades impeça **Alunos aptos e competentes** de contribuírem efetivamente para as atividades do **Superior Tribunal Militar**.\n\nSeguem abaixo as atividades que deverão ser realizadas pelos **Alunos ao longo dos dias de formação**:\n\n${SEPARATOR}`,
   });
 
-  // Cada dia é composto por: embed com título + mensagem de conteúdo + espaço invisível.
   for (const day of days) {
     await sendWebhook({
       embeds: [
         {
           title: `[${ESFAM_EMOJI}] ${day.title}`,
+          color: EMBED_COLOR_DIAS,
         },
       ],
     });
@@ -152,7 +154,6 @@ async function publishEsfam() {
     await sendWebhook({ content: INVISIBLE });
   }
 
-  // Rodapé final.
   await sendWebhook({
     content: `${SEPARATOR}\n\n**SUPERIOR TRIBUNAL MILITAR**\n-# Cronograma EsFAM\n\n-# Desenvolvido e Implementado por: ClaudirDoPneu e Joca_gl3`,
   });
