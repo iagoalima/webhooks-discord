@@ -1,4 +1,4 @@
-const WEBHOOK_URL = process.env.STM_DECRETOS_WEBHOOK_URL;
+const WEBHOOK_URL = process.env.WEBHOOK_URL;
 
 const BANNER_URL =
   'https://raw.githubusercontent.com/iagoalima/webhooks-discord/main/webhooks/banner%20stm%20-%20decretos.png';
