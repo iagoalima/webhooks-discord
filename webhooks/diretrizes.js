@@ -1,11 +1,10 @@
 const WEBHOOK_URL = process.env.WEBHOOK_URL;
 
 const BANNER_URL =
-  'https://github.com/iagoalima/webhooks-discord/blob/3d9fffc00f845361c1bf46a9b852bf80eff67b98/webhooks/banner%20stm%20-%20diretrizes.png';
+  'https://raw.githubusercontent.com/iagoalima/webhooks-discord/main/webhooks/banner%20stm%20-%20diretrizes.png';
 
-const EMBED_COLOR = 0x1e3748;;
+const EMBED_COLOR = 0x1e3748;
 const REQUEST_DELAY = 700;
-const INVISIBLE = '\u200B';
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -47,15 +46,13 @@ async function sendWebhook(payload) {
   }
 }
 
-async function publishDecretos() {
+async function publishDiretrizes() {
   if (!WEBHOOK_URL) {
     throw new Error(
       'Defina a variável de ambiente WEBHOOK_URL antes de executar.',
     );
   }
 
-  // Título + banner
-  // O conteúdo invisível cria espaço entre o embed e o próximo bloco.
   await sendWebhook({
     embeds: [
       {
@@ -68,12 +65,11 @@ async function publishDecretos() {
     ],
   });
 }
-  
 
-publishDecretos()
-  .then(() => console.log('Aviso de decretos publicado com sucesso.'))
+publishDiretrizes()
+  .then(() => console.log('Diretrizes publicadas com sucesso.'))
   .catch((error) => {
-    console.error('Falha ao publicar o aviso de decretos:');
+    console.error('Falha ao publicar as diretrizes:');
     console.error(error);
     process.exitCode = 1;
   });
