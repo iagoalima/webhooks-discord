@@ -1,7 +1,7 @@
 const WEBHOOK_URL = process.env.WEBHOOK_URL;
 
 const BANNER_URL =
-  'https://raw.githubusercontent.com/iagoalima/webhooks-discord/main/webhooks/banner%20stm%20-%20decretos.png';
+  'https://github.com/iagoalima/webhooks-discord/blob/3d9fffc00f845361c1bf46a9b852bf80eff67b98/webhooks/banner%20stm%20-%20diretrizes.png';
 
 const EMBED_COLOR = 0x1e3748;;
 const REQUEST_DELAY = 700;
@@ -50,7 +50,7 @@ async function sendWebhook(payload) {
 async function publishDecretos() {
   if (!WEBHOOK_URL) {
     throw new Error(
-      'Defina a variável de ambiente STM_DECRETOS_WEBHOOK_URL antes de executar.',
+      'Defina a variável de ambiente WEBHOOK_URL antes de executar.',
     );
   }
 
@@ -59,7 +59,7 @@ async function publishDecretos() {
   await sendWebhook({
     embeds: [
       {
-        title: 'Canal Oficial de Decretos — Superior Tribunal Militar',
+        title: 'Canal Oficial de Diretrizes — Superior Tribunal Militar',
         color: EMBED_COLOR,
         image: {
           url: BANNER_URL,
@@ -67,46 +67,8 @@ async function publishDecretos() {
       },
     ],
   });
-
-  await sendWebhook({
-    content: INVISIBLE,
-  });
-
-  // Primeiro texto
-  await sendWebhook({
-    content: `> Com o intuito de preservar a organização institucional, a clareza nas comunicações e a ampla publicidade dos atos normativos, este canal destina-se exclusivamente à divulgação dos decretos expedidos no âmbito do Superior Tribunal Militar.
-${INVISIBLE}`,
-  });
-
-  // Segundo texto
-  await sendWebhook({
-    content: `> A criação deste espaço específico torna-se imprescindível, uma vez que, no canal de avisos, os decretos acabam sendo inseridos entre diversas outras comunicações, dificultando sua localização e consulta posterior.
-${INVISIBLE}`,
-  });
-
-  // Terceiro texto
-  await sendWebhook({
-    content: `> Neste canal, portanto, serão postados exclusivamente os decretos vigentes e arquivados, assegurando fácil acesso, transparência e controle documental por parte de todos os membros da Instituição.
-${INVISIBLE}`,
-  });
-
-  // Data, reformulação e assinatura em embed
-  await sendWebhook({
-    embeds: [
-      {
-        color: EMBED_COLOR,
-        description:
-          '**__Cordialmente,__**\n\n' +
-          '*Ex-Juiz brab_tb,*\n' +
-          '**Superior Tribunal Militar**\n',
-        footer: {
-          text: 'Reformulação do modelo original por ClaudirDoPneu\n' +
-          '18/07/2025 • 23/09/2026',
-        },
-      },
-    ],
-  });
 }
+  
 
 publishDecretos()
   .then(() => console.log('Aviso de decretos publicado com sucesso.'))
