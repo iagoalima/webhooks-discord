@@ -5,6 +5,7 @@ const BANNER_URL =
 
 const EMBED_COLOR = 0x7daba9;
 const REQUEST_DELAY = 700;
+const INVISIBLE = '\u200B';
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -51,27 +52,45 @@ async function publishDecretos() {
     );
   }
 
+  // Título em tamanho grande + banner.
   await sendWebhook({
     embeds: [
       {
         title: 'Canal Oficial de Decretos — Superior Tribunal Militar',
-        description: `> Com o intuito de preservar a organização institucional, a clareza nas comunicações e a ampla publicidade dos atos normativos, este canal destina-se exclusivamente à divulgação dos decretos expedidos no âmbito do Superior Tribunal Militar.
-
-> A criação deste espaço específico torna-se imprescindível, uma vez que, no canal de avisos, os decretos acabam sendo inseridos entre diversas outras comunicações, dificultando sua localização e consulta posterior.
-
-> Neste canal, portanto, serão postados exclusivamente os decretos vigentes e arquivados, assegurando fácil acesso, transparência e controle documental por parte de todos os membros da Instituição.
-
-__18 de julho de 2025.__
-
-Cordialmente,
-Ex-Juiz brab_tb,
-Superior Tribunal Militar.`,
         color: EMBED_COLOR,
         image: {
           url: BANNER_URL,
         },
       },
     ],
+  });
+
+  // Primeira mensagem.
+  await sendWebhook({
+    content: `> Com o intuito de preservar a organização institucional, a clareza nas comunicações e a ampla publicidade dos atos normativos, este canal destina-se exclusivamente à divulgação dos decretos expedidos no âmbito do Superior Tribunal Militar.
+${INVISIBLE}`,
+  });
+
+  // Segunda mensagem.
+  await sendWebhook({
+    content: `> A criação deste espaço específico torna-se imprescindível, uma vez que, no canal de avisos, os decretos acabam sendo inseridos entre diversas outras comunicações, dificultando sua localização e consulta posterior.
+${INVISIBLE}`,
+  });
+
+  // Terceira mensagem.
+  await sendWebhook({
+    content: `> Neste canal, portanto, serão postados exclusivamente os decretos vigentes e arquivados, assegurando fácil acesso, transparência e controle documental por parte de todos os membros da Instituição.
+${INVISIBLE}`,
+  });
+
+  // Data e assinatura.
+  await sendWebhook({
+    content: `__18 de julho de 2025.__
+${INVISIBLE}
+>
+Cordialmente,
+Ex-Juiz brab_tb,
+Superior Tribunal Militar.`,
   });
 }
 
