@@ -5,8 +5,8 @@ const BANNER_URL = 'https://raw.githubusercontent.com/iagoalima/webhooks-discord
 const SEPARATOR = '**───────────────── ❖ ─────────────────**';
 const INVISIBLE = '\u200B';
 const REQUEST_DELAY = 700;
-const EMBED_COLOR_TITULO = 0x5865F2;
-const EMBED_COLOR_DIAS = 0x2B2D31;
+const EMBED_COLOR_TITULO = 0x1e3748;
+const EMBED_COLOR_DIAS = 0x7daba9;
 
 const days = [
   {
@@ -137,7 +137,7 @@ async function publishEsfam() {
 
   // Texto introdutório.
   await sendWebhook({
-    content: `O cronograma da **EsFAM** tem como principal objetivo assegurar a progressão contínua das atividades e aulas, garantindo que o processo de formação seja concluído dentro do prazo estipulado.\n\nDessa forma, busca-se evitar que a inoperância ou a ausência de andamento nas atividades impeça **Alunos aptos e competentes** de contribuírem efetivamente para as atividades do **Superior Tribunal Militar**.\n\nSeguem abaixo as atividades que deverão ser realizadas pelos **Alunos ao longo dos dias de formação**:\n\n${SEPARATOR}`,
+    content: `O cronograma da **EsFAM** tem como principal objetivo assegurar a progressão contínua das atividades e aulas, garantindo que o processo de formação seja concluído dentro do prazo estipulado.\n\nDessa forma, busca-se evitar que a inoperância ou a ausência de andamento nas atividades impeça **Alunos aptos e competentes** de contribuírem efetivamente para as atividades do **Superior Tribunal Militar**.\n\nSeguem abaixo as atividades que deverão ser realizadas pelos **Alunos ao longo dos dias de formação**:\n${INVISIBLE}`,
   });
 
   for (const day of days) {
